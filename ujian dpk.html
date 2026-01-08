@@ -1,0 +1,114 @@
+<html>
+<head>
+  <title>Ujian DPK - Ojol</title>
+</head>
+<body>
+
+<script>
+
+const TARIF_PER_KM = 5000;
+
+
+let N = parseInt(prompt("Masukkan jumlah order:"));
+
+// ARRAY DATA
+let dataOjol = [];
+
+
+let totalOrder = 0;
+let totalPotongan = 0;
+let totalBiayaCuaca = 0;
+let totalPendapatanAkhir = 0;
+
+
+
+for (let i = 0; i < N; i++) {
+  console.log("Order ke-" + (i + 1));
+
+ 
+  let nama = prompt("Masukkan nama pelanggan:");
+  let jarak = parseFloat(prompt("Masukkan jarak tempuh (km):"));
+  let sesi = prompt("Masukkan sesi (pagi/siang/malam):").toLowerCase();
+  let cuaca = prompt("Masukkan kondisi cuaca (cerah/hujan/banjir):").toLowerCase();
+
+ 
+  let tarifDasar = jarak * TARIF_PER_KM;
+
+  
+  let potonganJarak = 0;
+
+  if (jarak <= 5) {
+    potonganJarak = 0;
+  } else if (jarak <= 10) {
+    let sisaKm = jarak - 5;
+    potonganJarak = sisaKm * TARIF_PER_KM * 0.10;
+  } else {
+    let potonganKmKedua = 5 * TARIF_PER_KM * 0.15;
+    let sisaKm = (jarak - 10) * TARIF_PER_KM * 0.25;
+    potonganJarak = potonganKmKedua + sisaKm;
+  }
+
+
+
+  if (sesi === "pagi") {
+  } else if (sesi === "siang") {
+    
+  } else if (sesi === "malam") {
+    potonganSesi = tarifDasar * 0.05;
+  }
+
+ 
+  let biayaTambahan = 0;
+
+  if (cuaca === "cerah") {
+    biayaTambahan = 0;
+  } else if (cuaca === "hujan") {
+    biayaTambahan = tarifDasar * 0.10;
+  } else if (cuaca === "banjir") {
+    biayaTambahan = tarifDasar * 0.20;
+  }
+
+  
+  let totalPotonganOrder = potonganJarak + potonganSesi;
+  let tarifAkhir = tarifDasar - totalPotonganOrder + biayaTambahan;
+
+  dataOjol.push({
+    nama,
+    jarak,
+    sesi,
+    cuaca,
+    tarifDasar,
+    potongan: totalPotonganOrder,
+    biayaCuaca: biayaTambahan,
+    tarifAkhir
+  });
+
+  totalOrder++;
+  totalPotongan += totalPotonganOrder;
+  totalBiayaCuaca += biayaTambahan;
+  totalPendapatanAkhir += tarifAkhir;
+
+  console.log("Nama Pelanggan:", nama);
+  console.log("Jarak Tempuh:", jarak, "km");
+  console.log("Sesi:", sesi);
+  console.log("Cuaca:", cuaca);
+  console.log("Tarif Dasar: Rp", tarifDasar);
+  console.log("Total Potongan: Rp", totalPotonganOrder);
+  console.log("Biaya Tambahan: Rp", biayaTambahan);
+  console.log("Tarif Akhir: Rp", tarifAkhir);
+}
+
+
+console.log("=== RINGKASAN ===");
+console.log("Total Order:", totalOrder);
+console.log("Total Potongan:", totalPotongan);
+console.log("Total Biaya Tambahan:", totalBiayaCuaca);
+console.log("Total Pendapatan Akhir:", totalPendapatanAkhir);
+console.log(
+  "Rata-rata Pendapatan per Order:",
+  totalPendapatanAkhir / totalOrder
+);
+</script>
+
+</body>
+</html>
